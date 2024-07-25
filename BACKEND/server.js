@@ -7,6 +7,7 @@ const rateLimit = require("express-rate-limit");
 const products = require("./src/routers/products");
 const auth = require("./src/routers/auth");
 const carts = require("./src/routers/carts");
+const orders = require("./src/routers/orders");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", products);
 app.use("/auth", auth);
 app.use("/cart", carts);
+app.use("/orders", orders);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
