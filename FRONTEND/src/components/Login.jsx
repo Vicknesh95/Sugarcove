@@ -1,11 +1,15 @@
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useContext } from "react";
 import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
+import RegisterModal from "./RegisterModal";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const userCtx = useContext(UserContext);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const login = async () => {
     try {
@@ -23,9 +27,11 @@ const Login = () => {
         throw new Error("fetch error");
       }
       const data = await response.json();
+      localStorage.setItem("accessToken", data.access);
       userCtx.setAccessToken(data.access);
       const decoded = jwtDecode(data.access);
       userCtx.setRole(decoded.role);
+      navigate("/");
       console.log(data);
     } catch (error) {
       console.log(error.message);
@@ -33,7 +39,10 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <>
+      {showUpdateModal && (
+        <RegisterModal setShowUpdateModal={setShowUpdateModal} />
+      )}
       <div className="login-container">
         <div>
           <label>Email</label>
@@ -57,8 +66,9 @@ const Login = () => {
           />
         </div>
         <button onClick={login}>Login</button>
+        <button onClick={() => setShowUpdateModal(true)}>Register</button>
       </div>
-    </div>
+    </>
   );
 };
 
