@@ -1,7 +1,7 @@
 .productCard {
   position: relative;
   padding: 20px;
-  margin: 20px;
+  margin: 50px;
   border-radius: 5px;
   border-style: solid;
   border-color: black;
@@ -35,12 +35,41 @@
 }
 
 .addToCartBtn {
-  position: absolute; 
+  position: absolute;
   top: 10px;
-  right: 10px; 
+  right: 10px;
   background-color: #8b4513;
-  color: white; 
+  color: white;
   border-radius: 5px;
-  padding: 10px 20px; 
-  cursor: pointer; 
+  cursor: pointer;
+}
+
+.addProductBtn {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background-color: #8b4513;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteProductBtn {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: #8b4513;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.updateProductBtn {
+  position: absolute;
+  top: 90px;
+  right: 10px;
+  background-color: #8b4513;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }

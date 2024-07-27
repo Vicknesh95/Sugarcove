@@ -10,23 +10,22 @@
 
 .modal {
   position: fixed;
-  /* background: dark blue; */
+  background-color: brown;
   color: white;
   top: 30vh;
   bottom: 30vh;
   left: 30%;
   width: 40vw;
   z-index: 50;
-  overflow: hidden;
+  overflow: scroll;
   border-radius: 20px;
   padding: 20px;
-  /* text-align: center; */
 }
 
 .delBtn {
   position: absolute;
-  right: 11.5px;
-  top: 3.5px;
+  right: 20px;
+  top: 10px;
   cursor: pointer;
 }
 
@@ -57,7 +56,7 @@ input {
   height: 50%;
 }
 
-.registerBtn {
+.registerBtn .addProductBtn {
   background-color: black;
   color: white;
   border-radius: 5px;
@@ -65,4 +64,10 @@ input {
   width: 100%;
   text-align: center;
   margin-top: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 8px;
 }
