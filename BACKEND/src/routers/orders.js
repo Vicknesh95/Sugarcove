@@ -7,9 +7,9 @@ const {
   updateOrderStatus,
 } = require("../controllers/orders");
 
-router.get("/pending", getPendingOrders);
-router.get("/inProgress", getInProgressOrders);
-router.get("/completed", getCompletedOrders);
+router.post("/pending", getPendingOrders);
+router.post("/inProgress", getInProgressOrders);
+router.post("/completed", getCompletedOrders);
 router.patch("/updatestatus", updateOrderStatus);
 
 module.exports = router;
