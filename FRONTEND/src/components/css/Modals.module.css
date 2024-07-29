@@ -56,7 +56,7 @@ input {
   height: 50%;
 }
 
-.registerBtn .addProductBtn {
+.registerBtn .addProductBtn .checkoutBtn {
   background-color: black;
   color: white;
   border-radius: 5px;

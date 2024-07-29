@@ -36,6 +36,7 @@ const Products = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userCtx.accessToken}`,
         },
         body: JSON.stringify({
           id: id,

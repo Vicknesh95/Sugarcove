@@ -6,8 +6,9 @@ const {
   login,
   refresh,
 } = require("../controllers/auth");
+const { authAdmin } = require("../middleware/auth");
 
-router.get("/users", getAllUsers);
+router.get("/users", authAdmin, getAllUsers);
 router.put("/register", register);
 router.post("/login", login);
 router.post("/refresh", refresh);

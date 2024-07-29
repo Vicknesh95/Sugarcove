@@ -6,10 +6,11 @@ const {
   getCompletedOrders,
   updateOrderStatus,
 } = require("../controllers/orders");
+const { auth, authAdmin } = require("../middleware/auth");
 
-router.post("/pending", getPendingOrders);
-router.post("/inProgress", getInProgressOrders);
-router.post("/completed", getCompletedOrders);
-router.patch("/updatestatus", updateOrderStatus);
+router.post("/pending", auth, getPendingOrders);
+router.post("/inProgress", auth, getInProgressOrders);
+router.post("/completed", auth, getCompletedOrders);
+router.patch("/updatestatus", authAdmin, updateOrderStatus);
 
 module.exports = router;

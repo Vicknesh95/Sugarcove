@@ -1,9 +1,11 @@
 import { React, useEffect, useState, useContext } from "react";
 import styles from "./css/Cart.module.css";
 import UserContext from "../context/user";
+import CheckoutCartModal from "./CheckoutCartModal";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [showCheckoutModal, setShowCheckOutModal] = useState(false);
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState("");
   const userCtx = useContext(UserContext);
@@ -29,7 +31,7 @@ const Cart = () => {
     }
   };
 
-  const updateCartItems = async (productId, quantity, notes) => {
+  const updateCartItems = async (productId) => {
     try {
       const response = await fetch(import.meta.env.VITE_SERVER + "/cart/cart", {
         method: "PATCH",
@@ -52,6 +54,30 @@ const Cart = () => {
       getCartItems();
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  const deleteCartItem = async (productId) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_SERVER + "/cart/cart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userCtx.accessToken}`,
+        },
+        body: JSON.stringify({
+          user_id: userCtx.userId,
+          product_id: productId,
+        }),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("error deleting item from cart");
+      }
+      await response.json();
+      getCartItems();
+    } catch (err) {
+      console.error(err.message);
     }
   };
 
@@ -95,6 +121,12 @@ const Cart = () => {
                     updateCartItems(item.product_id, item.notes, e.target.value)
                   }
                 />
+                <button
+                  className={styles.removeItemBtn}
+                  onClick={() => deleteCartItem(item.product_id)}
+                >
+                  Remove Item
+                </button>
               </div>
             </div>
           );
@@ -112,11 +144,19 @@ const Cart = () => {
           })}
         </ol>
         <h3>Total: ${totalPrice}</h3>
-        <button className={styles.checkoutBtn}>Checkout</button>
+        <button
+          className={styles.checkoutBtn}
+          onClick={() => setShowCheckOutModal(true)}
+        >
+          Checkout
+        </button>
       </div>
       <div className={styles.payment}>
         <h2>Payment Instructions</h2>
       </div>
+      {showCheckoutModal && (
+        <CheckoutCartModal setShowCheckOutModal={setShowCheckOutModal} />
+      )}
     </div>
   );
 };
