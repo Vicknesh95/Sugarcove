@@ -12,6 +12,7 @@ import { jwtDecode } from "jwt-decode";
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [role, setRole] = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -19,6 +20,7 @@ function App() {
       setAccessToken(token);
       const decoded = jwtDecode(token);
       setRole(decoded.role);
+      setUserId(decoded.id);
     }
   }, []);
 
@@ -26,12 +28,21 @@ function App() {
     localStorage.removeItem("accessToken");
     setAccessToken("");
     setRole("");
+    setUserId("");
   };
 
   return (
     <>
       <UserContext.Provider
-        value={{ accessToken, setAccessToken, role, setRole, logout }}
+        value={{
+          accessToken,
+          setAccessToken,
+          role,
+          setRole,
+          userId,
+          setUserId,
+          logout,
+        }}
       >
         <Navbar />
 

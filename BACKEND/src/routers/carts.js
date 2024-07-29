@@ -9,7 +9,7 @@ const {
   checkoutCartItems,
 } = require("../controllers/carts");
 
-router.get("/cart", viewAllInCart);
+router.post("/cart", viewAllInCart);
 router.put("/cart", addToCart);
 router.patch("/cart", updateCart);
 router.delete("/cart", removeFromCart);

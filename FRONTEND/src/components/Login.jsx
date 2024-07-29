@@ -31,6 +31,7 @@ const Login = () => {
       userCtx.setAccessToken(data.access);
       const decoded = jwtDecode(data.access);
       userCtx.setRole(decoded.role);
+      userCtx.setUserId(decoded.id);
       navigate("/");
       console.log(data);
     } catch (error) {

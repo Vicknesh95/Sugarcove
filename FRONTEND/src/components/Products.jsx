@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./css/Products.module.css";
 import CreateProductsModal from "./CreateProductsModal";
 import UpdateProductsModal from "./UpdateProductsModal";
+import UserContext from "../context/user";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [productToUpdate, setProductToUpdate] = useState(null);
+  const [productToUpdate, setProductToUpdate] = useState("");
+  const userCtx = useContext(UserContext);
 
   const getAllProducts = async () => {
     try {
@@ -43,9 +45,33 @@ const Products = () => {
       if (!response.ok) {
         throw new Error("error deleting product");
       }
-      await response.json();
+      // await response.json();
+      getAllProducts();
     } catch (err) {
       console.error(err.message);
+    }
+  };
+
+  const addToCart = async (productId) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_SERVER + "/cart/cart", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userCtx.accessToken}`,
+        },
+        body: JSON.stringify({
+          user_id: userCtx.userId,
+          product_id: productId,
+          quantity: 1,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Error adding item to cart");
+      }
+      await response.json();
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
@@ -80,7 +106,12 @@ const Products = () => {
             </div>
             <div className={styles.productAllergens}>{product.allergens}</div>
             <div className={styles.price}>${product.product_price}</div>
-            <button className={styles.addToCartBtn}>Add to Cart</button>
+            <button
+              className={styles.addToCartBtn}
+              onClick={() => addToCart(product.id)}
+            >
+              Add to Cart
+            </button>
             <button
               className={styles.updateProductBtn}
               onClick={() => {
