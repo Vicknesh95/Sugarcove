@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import ReactDOM from "react-dom";
 import styles from "./css/modals.module.css";
+import UserContext from "../context/user";
 
 const Overlay = (props) => {
   const [productName, setProductName] = useState("");
@@ -8,6 +9,7 @@ const Overlay = (props) => {
   const [productDescription, setProductDescription] = useState("");
   const [allergens, setAllergens] = useState("");
   const [productPrice, setProductPrice] = useState("");
+  const userCtx = useContext(UserContext);
 
   const addProduct = async () => {
     try {
@@ -15,6 +17,7 @@ const Overlay = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userCtx.accessToken}`,
         },
         body: JSON.stringify({
           product_name: productName,

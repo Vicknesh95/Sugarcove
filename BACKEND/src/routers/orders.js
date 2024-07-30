@@ -5,12 +5,14 @@ const {
   getInProgressOrders,
   getCompletedOrders,
   updateOrderStatus,
+  getAdminOrders,
 } = require("../controllers/orders");
 const { auth, authAdmin } = require("../middleware/auth");
 
 router.post("/pending", auth, getPendingOrders);
 router.post("/inProgress", auth, getInProgressOrders);
 router.post("/completed", auth, getCompletedOrders);
-router.patch("/updatestatus", authAdmin, updateOrderStatus);
+router.patch("/update", authAdmin, updateOrderStatus);
+router.get("/admin/orders", getAdminOrders);
 
 module.exports = router;

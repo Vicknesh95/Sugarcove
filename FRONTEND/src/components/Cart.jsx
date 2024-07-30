@@ -6,6 +6,7 @@ import CheckoutCartModal from "./CheckoutCartModal";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [showCheckoutModal, setShowCheckOutModal] = useState(false);
+  const [updatedItem, setUpdatedItem] = useState("");
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState("");
   const userCtx = useContext(UserContext);
@@ -42,8 +43,8 @@ const Cart = () => {
         body: JSON.stringify({
           user_id: userCtx.userId,
           product_id: productId,
-          quantity,
-          notes,
+          quantity: quantity,
+          notes: notes,
         }),
       });
       if (!response.ok) {
@@ -106,21 +107,26 @@ const Cart = () => {
                   type="number"
                   min="1"
                   defaultValue={item.quantity}
-                  onChange={(e) =>
-                    updateCartItems(
-                      item.product_id,
-                      item.quantity,
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => {
+                    setUpdatedItem(item.id);
+                    setQuantity(e.target.value);
+                  }}
                 />
                 <textarea
                   placeholder="Notes"
                   defaultValue={item.notes}
-                  onChange={(e) =>
-                    updateCartItems(item.product_id, item.notes, e.target.value)
-                  }
+                  onChange={(e) => {
+                    setUpdatedItem(item.id);
+                    setNotes(e.target.value);
+                  }}
                 />
+                <button
+                  onClick={() => {
+                    updateCartItems(item.product_id);
+                  }}
+                >
+                  Edit
+                </button>
                 <button
                   className={styles.removeItemBtn}
                   onClick={() => deleteCartItem(item.product_id)}

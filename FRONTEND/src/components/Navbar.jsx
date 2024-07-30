@@ -5,7 +5,7 @@ import styles from "./css/Navbar.module.css";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { accessToken, logout } = useContext(user);
+  const { accessToken, role, logout } = useContext(user);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,16 +23,20 @@ const Navbar = () => {
           <li>
             <NavLink to="/products">PRODUCTS</NavLink>
           </li>
-          {accessToken && (
-            <>
-              <li>
-                <NavLink to="/cart">CART</NavLink>
-              </li>
-              <li>
-                <NavLink to="/orders">ORDERS</NavLink>
-              </li>
-            </>
+          {accessToken && role === "USER" && (
+            <li>
+              <NavLink to="/cart">CART</NavLink>
+            </li>
           )}
+
+          <li>
+            {accessToken && role === "ADMIN" ? (
+              <NavLink to="/admin-orders">ORDERS</NavLink>
+            ) : (
+              <NavLink to="/orders">ORDERS</NavLink>
+            )}
+          </li>
+
           <li>
             {accessToken ? (
               <button onClick={handleLogout}>LOGOUT</button>

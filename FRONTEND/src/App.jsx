@@ -5,6 +5,7 @@ import Orders from "./components/Orders";
 import Products from "./components/Products";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
+import AdminOrders from "./components/AdminOrders";
 import { Route, Routes } from "react-router-dom";
 import UserContext from "./context/user";
 import { jwtDecode } from "jwt-decode";
@@ -51,6 +52,7 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="cart" element={<Cart />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="admin-orders" element={<AdminOrders />} />
           <Route path="login" element={<Login />} />
         </Routes>
       </UserContext.Provider>
