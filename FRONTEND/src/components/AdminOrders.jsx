@@ -22,11 +22,39 @@ const AdminOrders = () => {
         throw new Error("Fetch error");
       }
       const data = await response.json();
-      console.log(data);
-      setOrders(data);
+      setOrders(groupOrdersById(data));
+      console.log(groupOrdersById(data));
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const groupOrdersById = (orders) => {
+    const groupedOrders = {}; //empty object to hold my grouped orders
+
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      if (!groupedOrders[order.order_id]) {
+        //checks if the order_id is already part of groupedOrders object, if not it will create one
+        groupedOrders[order.order_id] = {
+          order_id: order.order_id,
+          name: order.name,
+          delivery_address: order.delivery_address,
+          contact_number: order.contact_number,
+          status: order.status,
+          products: [], //products array for all my products and prices to go into
+        };
+      }
+      groupedOrders[order.order_id].products.push({
+        product_id: order.product_id,
+        product_name: order.product_name,
+        quantity: order.quantity,
+        price: order.price,
+        notes: order.notes,
+      });
+    }
+    return Object.keys(groupedOrders).map((key) => groupedOrders[key]);
+    //maps it, takes all the keys and puts into an array
   };
 
   useEffect(() => {
@@ -37,6 +65,14 @@ const AdminOrders = () => {
 
   const filterOrderStatus = (status) => {
     return orders.filter((order) => order.status === status);
+  };
+
+  const productTotal = (products) => {
+    let total = 0;
+    for (let i = 0; i < products.length; i++) {
+      total += products[i].price * products[i].quantity;
+    }
+    return total;
   };
 
   return (
@@ -55,15 +91,17 @@ const AdminOrders = () => {
             <p>Status: {order.status}</p>
           </div>
           <div className={styles.orderDetails}>
-            <div className={styles.product}>
-              <p>Product Name: {order.product_name}</p>
-              <p>Product Amount: ${order.price}</p>
-              <p>Quantity: {order.quantity}</p>
-              <p>Notes: {order.notes}</p>
-            </div>
+            {order.products.map((product) => (
+              <div className={styles.product} key={product.product_id}>
+                <p>Product Name: {product.product_name}</p>
+                <p>Product Amount: ${product.price}</p>
+                <p>Quantity: {product.quantity}</p>
+                <p>Notes: {product.notes}</p>
+              </div>
+            ))}
           </div>
           <div className={styles.orderTotal}>
-            <p>Total Amount: ${order.price * order.quantity}</p>
+            <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
           </div>
         </div>
       ))}
@@ -80,15 +118,17 @@ const AdminOrders = () => {
             <p>Status: {order.status}</p>
           </div>
           <div className={styles.orderDetails}>
-            <div className={styles.product}>
-              <p>Product Name: {order.product_name}</p>
-              <p>Product Amount: ${order.price}</p>
-              <p>Quantity: {order.quantity}</p>
-              <p>Notes: {order.notes}</p>
-            </div>
+            {order.products.map((product) => (
+              <div className={styles.product} key={product.product_id}>
+                <p>Product Name: {product.product_name}</p>
+                <p>Product Amount: ${product.price}</p>
+                <p>Quantity: {product.quantity}</p>
+                <p>Notes: {product.notes}</p>
+              </div>
+            ))}
           </div>
           <div className={styles.orderTotal}>
-            <p>Total Amount: ${order.price * order.quantity}</p>
+            <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
           </div>
         </div>
       ))}
@@ -105,15 +145,17 @@ const AdminOrders = () => {
             <p>Status: {order.status}</p>
           </div>
           <div className={styles.orderDetails}>
-            <div className={styles.product}>
-              <p>Product Name: {order.product_name}</p>
-              <p>Product Amount: ${order.price}</p>
-              <p>Quantity: {order.quantity}</p>
-              <p>Notes: {order.notes}</p>
-            </div>
+            {order.products.map((product) => (
+              <div className={styles.product} key={product.product_id}>
+                <p>Product Name: {product.product_name}</p>
+                <p>Product Amount: ${product.price}</p>
+                <p>Quantity: {product.quantity}</p>
+                <p>Notes: {product.notes}</p>
+              </div>
+            ))}
           </div>
           <div className={styles.orderTotal}>
-            <p>Total Amount: ${order.price * order.quantity}</p>
+            <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
           </div>
         </div>
       ))}
