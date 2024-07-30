@@ -26,7 +26,7 @@ const Orders = () => {
       }
       const data = await response.json();
       console.log(data);
-      setPendingOrders(data);
+      setPendingOrders(groupOrdersById(data));
     } catch (error) {
       console.log(error.message);
     }
@@ -50,7 +50,7 @@ const Orders = () => {
       }
       const data = await response.json();
       console.log(data);
-      setInProgressOrders(data);
+      setInProgressOrders(groupOrdersById(data));
     } catch (error) {
       console.log(error.message);
     }
@@ -73,11 +73,37 @@ const Orders = () => {
         throw new Error("Fetch error");
       }
       const data = await response.json();
-      console.log(data);
-      setCompletedOrders(data);
+
+      setCompletedOrders(groupOrdersById(data));
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const groupOrdersById = (orders) => {
+    const groupedOrders = {};
+
+    for (const order of orders) {
+      if (!groupedOrders[order.order_id]) {
+        groupedOrders[order.order_id] = {
+          order_id: order.order_id,
+          name: order.name,
+          delivery_address: order.delivery_address,
+          contact_number: order.contact_number,
+          status: order.status,
+          products: [],
+        };
+      }
+      groupedOrders[order.order_id].products.push({
+        product_id: order.product_id,
+        product_name: order.product_name,
+        quantity: order.quantity,
+        price: order.price,
+        notes: order.notes,
+      });
+    }
+
+    return Object.keys(groupedOrders).map((key) => groupedOrders[key]);
   };
 
   useEffect(() => {
@@ -85,6 +111,14 @@ const Orders = () => {
       getPendingOrders(), getInProgressOrders(), getCompletedOrders();
     }
   }, [userCtx.userId]);
+
+  const productTotal = (products) => {
+    let total = 0;
+    for (let i = 0; i < products.length; i++) {
+      total += products[i].price * products[i].quantity;
+    }
+    return total;
+  };
 
   return (
     <div className={styles.container}>
@@ -104,15 +138,17 @@ const Orders = () => {
               <p>Status: {order.status}</p>
             </div>
             <div className={styles.orderDetails}>
-              <div className={styles.product}>
-                <p>Product Name: {order.product_name}</p>
-                <p>Product Amount: ${order.price}</p>
-                <p>Quantity: {order.quantity}</p>
-                <p>Notes: {order.notes}</p>
-              </div>
+              {order.products.map((product) => (
+                <div className={styles.product} key={product.product_id}>
+                  <p>Product Name: {product.product_name}</p>
+                  <p>Product Amount: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Notes: {product.notes}</p>
+                </div>
+              ))}
             </div>
             <div className={styles.orderTotal}>
-              <p>Total Amount: ${order.price * order.quantity}</p>
+              <p>Total Amount: ${productTotal(order.products)}</p>
             </div>
           </div>
         ))
@@ -132,15 +168,17 @@ const Orders = () => {
               <p>Status: {order.status}</p>
             </div>
             <div className={styles.orderDetails}>
-              <div className={styles.product}>
-                <p>Product Name: {order.product_name}</p>
-                <p>Product Amount: ${order.price}</p>
-                <p>Quantity: {order.quantity}</p>
-                <p>Notes: {order.notes}</p>
-              </div>
+              {order.products.map((product) => (
+                <div className={styles.product} key={product.product_id}>
+                  <p>Product Name: {product.product_name}</p>
+                  <p>Product Amount: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Notes: {product.notes}</p>
+                </div>
+              ))}
             </div>
             <div className={styles.orderTotal}>
-              <p>Total Amount: ${order.price * order.quantity}</p>
+              <p>Total Amount: ${productTotal(order.products)}</p>
             </div>
           </div>
         ))
@@ -160,15 +198,17 @@ const Orders = () => {
               <p>Status: {order.status}</p>
             </div>
             <div className={styles.orderDetails}>
-              <div className={styles.product}>
-                <p>Product Name: {order.product_name}</p>
-                <p>Product Amount: ${order.price}</p>
-                <p>Quantity: {order.quantity}</p>
-                <p>Notes: {order.notes}</p>
-              </div>
+              {order.products.map((product) => (
+                <div className={styles.product} key={product.product_id}>
+                  <p>Product Name: {product.product_name}</p>
+                  <p>Product Amount: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Notes: {product.notes}</p>
+                </div>
+              ))}
             </div>
             <div className={styles.orderTotal}>
-              <p>Total Amount: ${order.price * order.quantity}</p>
+              <p>Total Amount: ${productTotal(order.products)}</p>
             </div>
           </div>
         ))

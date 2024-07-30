@@ -1,10 +1,13 @@
 import { React, useEffect, useContext, useState } from "react";
 import styles from "./css/Orders.module.css";
 import UserContext from "../context/user";
+import UpdateStatusModal from "./UpdateStatusModal";
 
 const AdminOrders = () => {
   const userCtx = useContext(UserContext);
   const [orders, setOrders] = useState([]);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const getAllOrders = async () => {
     try {
@@ -80,85 +83,124 @@ const AdminOrders = () => {
       <h1>ORDERS</h1>
 
       <h2>Pending Payment</h2>
-
-      {filterOrderStatus("PENDING PAYMENT").map((order) => (
-        <div className={styles.orderContainer} key={order.order_id}>
-          <div className={styles.orderHeader}>
-            <p>Order ID: {order.order_id}</p>
-            <p>Name: {order.name}</p>
-            <p>Delivery Address: {order.delivery_address}</p>
-            <p>Contact Number: {order.contact_number}</p>
-            <p>Status: {order.status}</p>
+      {filterOrderStatus("PENDING PAYMENT").length === 0 ? (
+        <p>No orders pending payment</p>
+      ) : (
+        filterOrderStatus("PENDING PAYMENT").map((order) => (
+          <div className={styles.orderContainer} key={order.order_id}>
+            <div className={styles.orderHeader}>
+              <p>Order ID: {order.order_id}</p>
+              <p>Name: {order.name}</p>
+              <p>Delivery Address: {order.delivery_address}</p>
+              <p>Contact Number: {order.contact_number}</p>
+              <p>Status: {order.status}</p>
+            </div>
+            <div className={styles.orderDetails}>
+              {order.products.map((product) => (
+                <div className={styles.product} key={product.product_id}>
+                  <p>Product Name: {product.product_name}</p>
+                  <p>Product Amount: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Notes: {product.notes}</p>
+                </div>
+              ))}
+            </div>
+            <div className={styles.orderTotal}>
+              <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
+            </div>
+            <button
+              onClick={() => {
+                setShowUpdateModal(true);
+                setSelectedOrder(order);
+              }}
+            >
+              Update Status
+            </button>
           </div>
-          <div className={styles.orderDetails}>
-            {order.products.map((product) => (
-              <div className={styles.product} key={product.product_id}>
-                <p>Product Name: {product.product_name}</p>
-                <p>Product Amount: ${product.price}</p>
-                <p>Quantity: {product.quantity}</p>
-                <p>Notes: {product.notes}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.orderTotal}>
-            <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
 
       <h2>In Progress</h2>
-
-      {filterOrderStatus("IN PROGRESS").map((order) => (
-        <div className={styles.orderContainer} key={order.order_id}>
-          <div className={styles.orderHeader}>
-            <p>Order ID: {order.order_id}</p>
-            <p>Name: {order.name}</p>
-            <p>Delivery Address: {order.delivery_address}</p>
-            <p>Contact Number: {order.contact_number}</p>
-            <p>Status: {order.status}</p>
+      {filterOrderStatus("IN PROGRESS").length === 0 ? (
+        <p> No Orders in Progress</p>
+      ) : (
+        filterOrderStatus("IN PROGRESS").map((order) => (
+          <div className={styles.orderContainer} key={order.order_id}>
+            <div className={styles.orderHeader}>
+              <p>Order ID: {order.order_id}</p>
+              <p>Name: {order.name}</p>
+              <p>Delivery Address: {order.delivery_address}</p>
+              <p>Contact Number: {order.contact_number}</p>
+              <p>Status: {order.status}</p>
+            </div>
+            <div className={styles.orderDetails}>
+              {order.products.map((product) => (
+                <div className={styles.product} key={product.product_id}>
+                  <p>Product Name: {product.product_name}</p>
+                  <p>Product Amount: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Notes: {product.notes}</p>
+                </div>
+              ))}
+            </div>
+            <div className={styles.orderTotal}>
+              <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
+            </div>
+            <button
+              onClick={() => {
+                setShowUpdateModal(true);
+                setSelectedOrder(order);
+              }}
+            >
+              Update Status
+            </button>
           </div>
-          <div className={styles.orderDetails}>
-            {order.products.map((product) => (
-              <div className={styles.product} key={product.product_id}>
-                <p>Product Name: {product.product_name}</p>
-                <p>Product Amount: ${product.price}</p>
-                <p>Quantity: {product.quantity}</p>
-                <p>Notes: {product.notes}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.orderTotal}>
-            <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
 
       <h2>Completed</h2>
-
-      {filterOrderStatus("COMPLETED").map((order) => (
-        <div className={styles.orderContainer} key={order.order_id}>
-          <div className={styles.orderHeader}>
-            <p>Order ID: {order.order_id}</p>
-            <p>Name: {order.name}</p>
-            <p>Delivery Address: {order.delivery_address}</p>
-            <p>Contact Number: {order.contact_number}</p>
-            <p>Status: {order.status}</p>
+      {filterOrderStatus("COMPLETED").length === 0 ? (
+        <p>No Completed Orders</p>
+      ) : (
+        filterOrderStatus("COMPLETED").map((order) => (
+          <div className={styles.orderContainer} key={order.order_id}>
+            <div className={styles.orderHeader}>
+              <p>Order ID: {order.order_id}</p>
+              <p>Name: {order.name}</p>
+              <p>Delivery Address: {order.delivery_address}</p>
+              <p>Contact Number: {order.contact_number}</p>
+              <p>Status: {order.status}</p>
+            </div>
+            <div className={styles.orderDetails}>
+              {order.products.map((product) => (
+                <div className={styles.product} key={product.product_id}>
+                  <p>Product Name: {product.product_name}</p>
+                  <p>Product Amount: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  <p>Notes: {product.notes}</p>
+                </div>
+              ))}
+            </div>
+            <div className={styles.orderTotal}>
+              <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
+            </div>
+            <button
+              onClick={() => {
+                setShowUpdateModal(true);
+                setSelectedOrder(order);
+              }}
+            >
+              Update Status
+            </button>
           </div>
-          <div className={styles.orderDetails}>
-            {order.products.map((product) => (
-              <div className={styles.product} key={product.product_id}>
-                <p>Product Name: {product.product_name}</p>
-                <p>Product Amount: ${product.price}</p>
-                <p>Quantity: {product.quantity}</p>
-                <p>Notes: {product.notes}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.orderTotal}>
-            <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
+      {showUpdateModal && (
+        <UpdateStatusModal
+          setShowUpdateModal={setShowUpdateModal}
+          selectedOrder={selectedOrder}
+        />
+      )}
     </div>
   );
 };
