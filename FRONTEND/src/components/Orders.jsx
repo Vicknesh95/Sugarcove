@@ -108,6 +108,7 @@ const Orders = () => {
                 <p>Product Name: {order.product_name}</p>
                 <p>Product Amount: ${order.price}</p>
                 <p>Quantity: {order.quantity}</p>
+                <p>Notes: {order.notes}</p>
               </div>
             </div>
             <div className={styles.orderTotal}>
@@ -135,6 +136,7 @@ const Orders = () => {
                 <p>Product Name: {order.product_name}</p>
                 <p>Product Amount: ${order.price}</p>
                 <p>Quantity: {order.quantity}</p>
+                <p>Notes: {order.notes}</p>
               </div>
             </div>
             <div className={styles.orderTotal}>
@@ -162,6 +164,7 @@ const Orders = () => {
                 <p>Product Name: {order.product_name}</p>
                 <p>Product Amount: ${order.price}</p>
                 <p>Quantity: {order.quantity}</p>
+                <p>Notes: {order.notes}</p>
               </div>
             </div>
             <div className={styles.orderTotal}>
