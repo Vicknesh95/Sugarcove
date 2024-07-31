@@ -199,6 +199,7 @@ const AdminOrders = () => {
         <UpdateStatusModal
           setShowUpdateModal={setShowUpdateModal}
           selectedOrder={selectedOrder}
+          getAllOrders={getAllOrders}
         />
       )}
     </div>

@@ -34,6 +34,7 @@ const Overlay = (props) => {
       await response.json();
 
       props.setShowCreateModal(false);
+      props.getAllProducts();
     } catch (err) {
       console.error(err.message);
     }
@@ -100,7 +101,10 @@ const CreateProductsModal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <Overlay setShowCreateModal={props.setShowCreateModal} />,
+        <Overlay
+          setShowCreateModal={props.setShowCreateModal}
+          getAllProducts={props.getAllProducts}
+        />,
         document.querySelector("#modal-root")
       )}
     </>

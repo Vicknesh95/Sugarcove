@@ -30,6 +30,7 @@ const Overlay = (props) => {
       await response.json();
 
       props.setShowUpdateModal(false);
+      props.getAllOrders();
     } catch (err) {
       console.error(err.message);
     }
@@ -62,6 +63,7 @@ const UpdateStatusModal = (props) => {
         <Overlay
           setShowUpdateModal={props.setShowUpdateModal}
           selectedOrder={props.selectedOrder}
+          getAllOrders={props.getAllOrders}
         />,
         document.querySelector("#modal-root")
       )}

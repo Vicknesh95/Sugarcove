@@ -10,10 +10,31 @@ const {
   checkoutCartItems,
 } = require("../controllers/carts");
 
+const {
+  validateAddToCartData,
+  validateUpdateCartData,
+  validateRemoveFromCartData,
+  validateCheckoutCartData,
+} = require("../validators/carts");
+
+const checkErrors = require("../validators/checkErrors");
+
 router.post("/cart", auth, viewAllInCart);
-router.put("/cart", auth, addToCart);
-router.patch("/cart", auth, updateCart);
-router.delete("/cart", auth, removeFromCart);
-router.put("/checkout", auth, checkoutCartItems);
+router.put("/cart", checkErrors, validateAddToCartData, auth, addToCart);
+router.patch("/cart", checkErrors, validateUpdateCartData, auth, updateCart);
+router.delete(
+  "/cart",
+  checkErrors,
+  validateRemoveFromCartData,
+  auth,
+  removeFromCart
+);
+router.put(
+  "/checkout",
+  checkErrors,
+  validateCheckoutCartData,
+  auth,
+  checkoutCartItems
+);
 
 module.exports = router;

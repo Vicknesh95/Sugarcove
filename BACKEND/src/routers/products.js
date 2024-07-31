@@ -8,9 +8,35 @@ const {
 } = require("../controllers/products");
 const { authAdmin } = require("../middleware/auth");
 
+const {
+  validateAddProductData,
+  validateUpdateProductData,
+  validateDeleteProductData,
+} = require("../validators/products");
+
+const checkErrors = require("../validators/checkErrors");
+
 router.get("/product", getProducts);
-router.post("/product", authAdmin, addProducts);
-router.patch("/product", authAdmin, updateProducts);
-router.delete("/product", authAdmin, deleteProducts);
+router.post(
+  "/product",
+  checkErrors,
+  validateAddProductData,
+  authAdmin,
+  addProducts
+);
+router.patch(
+  "/product",
+  checkErrors,
+  validateUpdateProductData,
+  authAdmin,
+  updateProducts
+);
+router.delete(
+  "/product",
+  checkErrors,
+  validateDeleteProductData,
+  authAdmin,
+  deleteProducts
+);
 
 module.exports = router;

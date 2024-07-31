@@ -8,9 +8,16 @@ const {
 } = require("../controllers/auth");
 const { authAdmin } = require("../middleware/auth");
 
+const {
+  validateLoginData,
+  validateRegistrationData,
+} = require("../validators/auth");
+
+const checkErrors = require("../validators/checkErrors");
+
 router.get("/users", authAdmin, getAllUsers);
-router.put("/register", register);
-router.post("/login", login);
+router.put("/register", checkErrors, validateRegistrationData, register);
+router.post("/login", checkErrors, validateLoginData, login);
 router.post("/refresh", refresh);
 
 module.exports = router;

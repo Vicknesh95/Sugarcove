@@ -28,14 +28,15 @@ const Navbar = () => {
               <NavLink to="/cart">CART</NavLink>
             </li>
           )}
-
-          <li>
-            {accessToken && role === "ADMIN" ? (
-              <NavLink to="/admin-orders">ORDERS</NavLink>
-            ) : (
-              <NavLink to="/orders">ORDERS</NavLink>
-            )}
-          </li>
+          {accessToken ? (
+            <li>
+              {accessToken && role === "ADMIN" ? (
+                <NavLink to="/admin-orders">ORDERS</NavLink>
+              ) : (
+                <NavLink to="/orders">ORDERS</NavLink>
+              )}
+            </li>
+          ) : null}
 
           <li>
             {accessToken ? (

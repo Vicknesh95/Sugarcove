@@ -62,7 +62,6 @@ const Products = () => {
           Authorization: `Bearer ${userCtx.accessToken}`,
         },
         body: JSON.stringify({
-          user_id: userCtx.userId,
           product_id: productId,
           quantity: 1,
         }),
@@ -82,20 +81,26 @@ const Products = () => {
 
   return (
     <>
-      <button
-        className={styles.addProductBtn}
-        onClick={() => setShowCreateModal(true)}
-      >
-        Add Product
-      </button>
+      {userCtx.role === "ADMIN" && (
+        <button
+          className={styles.addProductBtn}
+          onClick={() => setShowCreateModal(true)}
+        >
+          Add Product
+        </button>
+      )}
       {showUpdateModal && (
         <UpdateProductsModal
           setShowUpdateModal={setShowUpdateModal}
           product={productToUpdate}
+          getAllProducts={getAllProducts}
         />
       )}
       {showCreateModal && (
-        <CreateProductsModal setShowCreateModal={setShowCreateModal} />
+        <CreateProductsModal
+          setShowCreateModal={setShowCreateModal}
+          getAllProducts={getAllProducts}
+        />
       )}
       {products.map((product) => {
         return (
@@ -107,27 +112,33 @@ const Products = () => {
             </div>
             <div className={styles.productAllergens}>{product.allergens}</div>
             <div className={styles.price}>${product.product_price}</div>
-            <button
-              className={styles.addToCartBtn}
-              onClick={() => addToCart(product.id)}
-            >
-              Add to Cart
-            </button>
-            <button
-              className={styles.updateProductBtn}
-              onClick={() => {
-                setShowUpdateModal(true);
-                setProductToUpdate(product);
-              }}
-            >
-              Edit
-            </button>
-            <button
-              className={styles.deleteProductBtn}
-              onClick={() => deleteProduct(product.id)}
-            >
-              Delete
-            </button>
+            {userCtx.role === "USER" && (
+              <button
+                className={styles.addToCartBtn}
+                onClick={() => addToCart(product.id)}
+              >
+                Add to Cart
+              </button>
+            )}
+            {userCtx.role === "ADMIN" && (
+              <>
+                <button
+                  className={styles.updateProductBtn}
+                  onClick={() => {
+                    setShowUpdateModal(true);
+                    setProductToUpdate(product);
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  className={styles.deleteProductBtn}
+                  onClick={() => deleteProduct(product.id)}
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </div>
         );
       })}

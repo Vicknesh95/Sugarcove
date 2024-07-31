@@ -2,11 +2,9 @@ const pool = require("../db/db");
 
 const getPendingOrders = async (req, res) => {
   try {
-    const { user_id } = req.body;
-
     const pendingOrders = await pool.query(
       "SELECT orders.id AS order_id, users.name, orders.delivery_address, orders.contact_number, orders.status, order_items.product_id, order_items.quantity, order_items.price, order_items.notes, products.product_name FROM orders JOIN users ON orders.user_id = users.id JOIN order_items ON orders.id = order_items.order_id JOIN products ON order_items.product_id = products.id WHERE orders.user_id = $1 AND orders.status = 'PENDING PAYMENT'",
-      [user_id]
+      [req.decoded.id]
     );
 
     res.json(pendingOrders.rows);
@@ -18,11 +16,9 @@ const getPendingOrders = async (req, res) => {
 
 const getInProgressOrders = async (req, res) => {
   try {
-    const { user_id } = req.body;
-
     const ordersInProgress = await pool.query(
       "SELECT orders.id AS order_id, users.name, orders.delivery_address, orders.contact_number, orders.status, order_items.product_id, order_items.quantity, order_items.price, order_items.notes, products.product_name FROM orders JOIN users ON orders.user_id = users.id JOIN order_items ON orders.id = order_items.order_id JOIN products ON order_items.product_id = products.id WHERE orders.user_id = $1 AND orders.status = 'IN PROGRESS'",
-      [user_id]
+      [req.decoded.id]
     );
 
     res.json(ordersInProgress.rows);
@@ -34,11 +30,9 @@ const getInProgressOrders = async (req, res) => {
 
 const getCompletedOrders = async (req, res) => {
   try {
-    const { user_id } = req.body;
-
     const completedOrders = await pool.query(
       "SELECT orders.id AS order_id, users.name, orders.delivery_address, orders.contact_number, orders.status, order_items.product_id, order_items.quantity, order_items.price, order_items.notes, products.product_name FROM orders JOIN users ON orders.user_id = users.id JOIN order_items ON orders.id = order_items.order_id JOIN products ON order_items.product_id = products.id WHERE orders.user_id = $1 AND orders.status = 'COMPLETED'",
-      [user_id]
+      [req.decoded.id]
     );
 
     res.json(completedOrders.rows);

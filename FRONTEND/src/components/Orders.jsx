@@ -18,7 +18,6 @@ const Orders = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userCtx.accessToken}`,
           },
-          body: JSON.stringify({ user_id: userCtx.userId }),
         }
       );
       if (!response.ok) {
@@ -42,7 +41,6 @@ const Orders = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userCtx.accessToken}`,
           },
-          body: JSON.stringify({ user_id: userCtx.userId }),
         }
       );
       if (!response.ok) {
@@ -66,7 +64,6 @@ const Orders = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userCtx.accessToken}`,
           },
-          body: JSON.stringify({ user_id: userCtx.userId }),
         }
       );
       if (!response.ok) {

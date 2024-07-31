@@ -19,7 +19,6 @@ const Cart = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userCtx.accessToken}`,
         },
-        body: JSON.stringify({ user_id: userCtx.userId }),
       });
       if (!response.ok) {
         throw new Error("Fetch error");
@@ -41,7 +40,6 @@ const Cart = () => {
           Authorization: `Bearer ${userCtx.accessToken}`,
         },
         body: JSON.stringify({
-          user_id: userCtx.userId,
           product_id: productId,
           quantity: quantity,
           notes: notes,
@@ -67,7 +65,6 @@ const Cart = () => {
           Authorization: `Bearer ${userCtx.accessToken}`,
         },
         body: JSON.stringify({
-          user_id: userCtx.userId,
           product_id: productId,
         }),
       });
@@ -161,7 +158,10 @@ const Cart = () => {
         <h2>Payment Instructions</h2>
       </div>
       {showCheckoutModal && (
-        <CheckoutCartModal setShowCheckOutModal={setShowCheckOutModal} />
+        <CheckoutCartModal
+          setShowCheckOutModal={setShowCheckOutModal}
+          getCartItems={getCartItems}
+        />
       )}
     </div>
   );

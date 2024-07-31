@@ -19,7 +19,6 @@ const Overlay = (props) => {
             Authorization: `Bearer ${userCtx.accessToken}`,
           },
           body: JSON.stringify({
-            user_id: userCtx.userId,
             delivery_address: address,
             contact_number: contact,
           }),
@@ -32,6 +31,7 @@ const Overlay = (props) => {
       await response.json();
 
       props.setShowCheckOutModal(false);
+      props.getCartItems();
     } catch (err) {
       console.error(err.message);
     }
@@ -76,7 +76,10 @@ const CheckoutCartModal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <Overlay setShowCheckOutModal={props.setShowCheckOutModal} />,
+        <Overlay
+          setShowCheckOutModal={props.setShowCheckOutModal}
+          getCartItems={props.getCartItems}
+        />,
         document.querySelector("#modal-root")
       )}
     </>
