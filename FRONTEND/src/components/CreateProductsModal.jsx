@@ -58,8 +58,13 @@ const Overlay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <div className={styles.delBtn}>
-          <button onClick={() => props.setShowCreateModal(false)}>X</button>
+        <div>
+          <button
+            className={styles.delBtn}
+            onClick={() => props.setShowCreateModal(false)}
+          >
+            X
+          </button>
         </div>
         <h1 className={styles.modalHeader}> New Product </h1>
         <div>

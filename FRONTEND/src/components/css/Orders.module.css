@@ -63,7 +63,7 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-.updateStatusBtn:hover {
+.updateOrdersBtn:hover {
   background-color: #975a5e;
   color: #25161b;
-} 
+}

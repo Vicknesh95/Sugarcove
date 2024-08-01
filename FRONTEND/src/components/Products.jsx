@@ -113,9 +113,7 @@ const Products = () => {
               <div className={styles.productDesc}>
                 {product.product_description}
               </div>
-              <div className={styles.productAllergens}>
-                Allergens: {product.allergens}
-              </div>
+              <div className={styles.productAllergens}>{product.allergens}</div>
               <div className={styles.price}>${product.product_price}</div>
               {userCtx.role === "USER" && (
                 <button
