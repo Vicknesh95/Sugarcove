@@ -29,8 +29,6 @@ const authAdmin = (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
 
-      // additional role to create for admin account
-      // admin mods are in front end
       if (decoded.role === "ADMIN") {
         req.decoded = decoded;
         next();

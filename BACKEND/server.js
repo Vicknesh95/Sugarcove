@@ -1,4 +1,4 @@
-require("dotenv").config(); // always on top
+require("dotenv").config(); 
 
 const express = require("express");
 const cors = require("cors");
@@ -18,7 +18,7 @@ const limiter = rateLimit({
 
 const app = express();
 
-app.use(cors()); //should run before anything else
+app.use(cors()); 
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
