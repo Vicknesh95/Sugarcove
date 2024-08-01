@@ -46,7 +46,7 @@ const Products = () => {
       if (!response.ok) {
         throw new Error("error deleting product");
       }
-      // await response.json();
+
       getAllProducts();
     } catch (err) {
       console.error(err.message);
@@ -102,46 +102,50 @@ const Products = () => {
           getAllProducts={getAllProducts}
         />
       )}
-      {products.map((product) => {
-        return (
-          <div className={styles.productCard} key={product.id}>
-            <div className={styles.productName}>{product.product_name}</div>
-            <div className={styles.productCategory}>{product.product_type}</div>
-            <div className={styles.productDesc}>
-              {product.product_description}
+      <div className={styles.productsContainer}>
+        {products.map((product) => {
+          return (
+            <div className={styles.productCard} key={product.id}>
+              <div className={styles.productName}>{product.product_name}</div>
+              <div className={styles.productCategory}>
+                {product.product_type}
+              </div>
+              <div className={styles.productDesc}>
+                {product.product_description}
+              </div>
+              <div className={styles.productAllergens}>{product.allergens}</div>
+              <div className={styles.price}>${product.product_price}</div>
+              {userCtx.role === "USER" && (
+                <button
+                  className={styles.addToCartBtn}
+                  onClick={() => addToCart(product.id)}
+                >
+                  Add to Cart
+                </button>
+              )}
+              {userCtx.role === "ADMIN" && (
+                <>
+                  <button
+                    className={styles.updateProductBtn}
+                    onClick={() => {
+                      setShowUpdateModal(true);
+                      setProductToUpdate(product);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={styles.deleteProductBtn}
+                    onClick={() => deleteProduct(product.id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
             </div>
-            <div className={styles.productAllergens}>{product.allergens}</div>
-            <div className={styles.price}>${product.product_price}</div>
-            {userCtx.role === "USER" && (
-              <button
-                className={styles.addToCartBtn}
-                onClick={() => addToCart(product.id)}
-              >
-                Add to Cart
-              </button>
-            )}
-            {userCtx.role === "ADMIN" && (
-              <>
-                <button
-                  className={styles.updateProductBtn}
-                  onClick={() => {
-                    setShowUpdateModal(true);
-                    setProductToUpdate(product);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className={styles.deleteProductBtn}
-                  onClick={() => deleteProduct(product.id)}
-                >
-                  Delete
-                </button>
-              </>
-            )}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </>
   );
 };

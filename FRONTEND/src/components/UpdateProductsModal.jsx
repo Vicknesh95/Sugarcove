@@ -10,8 +10,25 @@ const Overlay = (props) => {
   const [allergens, setAllergens] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const userCtx = useContext(UserContext);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!productName) newErrors.productName = "Products Name is required";
+    if (!productType) newErrors.productType = "Product Type is required";
+    if (!productDescription)
+      newErrors.productDescription = "Product Description is required";
+    if (!productPrice) newErrors.productPrice = "Product Price is required";
+
+    if (allergens && allergens.length > 60)
+      newErrors.allergens = "Allergens cannot be more than 60 characters long ";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const updateProduct = async () => {
+    if (!validate()) return;
     try {
       const response = await fetch(import.meta.env.VITE_SERVER + "/product", {
         method: "PATCH",
@@ -56,6 +73,7 @@ const Overlay = (props) => {
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
             />
+            {errors.productName && <p>{errors.productName}</p>}
           </div>
           <div className={styles.modalInputContainer}>
             <p> Product Type: </p>
@@ -64,6 +82,7 @@ const Overlay = (props) => {
               value={productType}
               onChange={(e) => setProductType(e.target.value)}
             />
+            {errors.productType && <p>{errors.productType}</p>}
           </div>
           <div className={styles.modalInputContainer}>
             <p> Allergens: </p>
@@ -72,6 +91,7 @@ const Overlay = (props) => {
               value={allergens}
               onChange={(e) => setAllergens(e.target.value)}
             />
+            {errors.allergens && <p>{errors.allergens}</p>}
           </div>
           <div className={styles.modalInputContainer}>
             <p> Product Price: </p>
@@ -80,6 +100,7 @@ const Overlay = (props) => {
               value={productPrice}
               onChange={(e) => setProductPrice(e.target.value)}
             />
+            {errors.productPrice && <p>{errors.productPrice}</p>}
           </div>
           <div className={styles.modalInputContainer}>
             <p> Product Description: </p>
@@ -88,6 +109,7 @@ const Overlay = (props) => {
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
             />
+            {errors.productDescription && <p>{errors.productDescription}</p>}
           </div>
         </div>
         <button className={styles.addProductBtn} onClick={updateProduct}>

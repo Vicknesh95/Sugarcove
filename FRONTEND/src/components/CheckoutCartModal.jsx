@@ -7,8 +7,19 @@ const Overlay = (props) => {
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
   const userCtx = useContext(UserContext);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!address) newErrors.address = "Valid Address is needed for delivery ";
+    if (!contact)
+      newErrors.contact = "Valid Contact number is needed for delivery";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const addDeliveryDetails = async () => {
+    if (!validate()) return;
     try {
       const response = await fetch(
         import.meta.env.VITE_SERVER + "/cart/checkout",
@@ -54,6 +65,7 @@ const Overlay = (props) => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
+            {errors.address && <p>{errors.address}</p>}
           </div>
           <div className={styles.modalInputContainer}>
             <p> Contact Number </p>
@@ -62,6 +74,7 @@ const Overlay = (props) => {
               value={contact}
               onChange={(e) => setContact(e.target.value)}
             />
+            {errors.contact && errors.contact}
           </div>
         </div>
         <button className={styles.checkoutBtn} onClick={addDeliveryDetails}>

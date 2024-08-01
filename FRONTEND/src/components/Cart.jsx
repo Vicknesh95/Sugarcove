@@ -10,6 +10,15 @@ const Cart = () => {
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState("");
   const userCtx = useContext(UserContext);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!quantity) newErrors.quantity = "Please specify quantity";
+    if (!notes) newErrors.notes = "Notes is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const getCartItems = async () => {
     try {
@@ -32,6 +41,7 @@ const Cart = () => {
   };
 
   const updateCartItems = async (productId) => {
+    if (!validate()) return;
     try {
       const response = await fetch(import.meta.env.VITE_SERVER + "/cart/cart", {
         method: "PATCH",
@@ -109,6 +119,7 @@ const Cart = () => {
                     setQuantity(e.target.value);
                   }}
                 />
+                {errors.quantity && <p>{errors.quantity}</p>}
                 <textarea
                   placeholder="Notes"
                   defaultValue={item.notes}
@@ -117,6 +128,7 @@ const Cart = () => {
                     setNotes(e.target.value);
                   }}
                 />
+                {errors.notes && <p>{errors.notes}</p>}
                 <button
                   onClick={() => {
                     updateCartItems(item.product_id);

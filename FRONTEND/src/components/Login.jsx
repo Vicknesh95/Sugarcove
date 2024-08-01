@@ -10,8 +10,22 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!email) newErrors.email = "Email cannot be empty";
+    if (!password) newErrors.password = "Password cannot be empty";
+    if (password && password.length < 8)
+      newErrors.password = "Password must be atleast 8 characters long";
+    if (password && password.length > 20)
+      newErrors.password = "Password must be no longer than 20 characters";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const login = async () => {
+    if (!validate()) return;
     try {
       const response = await fetch(
         import.meta.env.VITE_SERVER + "/auth/login",
@@ -54,6 +68,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <p>{errors.email}</p>}
         </div>
 
         <div>
@@ -65,6 +80,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errors.password && <p>{errors.password}</p>}
         </div>
         <button onClick={login}>Login</button>
         <button onClick={() => setShowUpdateModal(true)}>Register</button>

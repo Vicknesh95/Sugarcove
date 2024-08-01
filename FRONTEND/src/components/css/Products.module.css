@@ -1,10 +1,16 @@
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
 .productCard {
   position: relative;
   padding: 20px;
-  margin: 50px;
   border-radius: 5px;
-  border-style: solid;
-  border-color: black;
+  border: solid 1px black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
 .productName {
@@ -18,7 +24,7 @@
 }
 
 .productDesc {
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 .productAllergens {
@@ -27,21 +33,28 @@
 }
 
 .price {
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
   font-size: large;
   font-weight: bold;
+  margin-top: 10px;
+}
+
+.addToCartBtn,
+.addProductBtn,
+.deleteProductBtn,
+.updateProductBtn {
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
+  margin-top: 10px;
 }
 
 .addToCartBtn {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
-  background-color: #8b4513;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .addProductBtn {
