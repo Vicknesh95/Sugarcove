@@ -1,9 +1,14 @@
 nav {
-  background-color: #8b4513;
+  background-color: #453953;
   padding: 10px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+
+.navItems {
+  display: flex;
+  gap: 20px;
 }
 
 ul {
@@ -15,19 +20,45 @@ ul {
 }
 
 li {
-  flex: 1;
   text-align: center;
 }
 
 a {
   text-decoration: none;
-  color: #ffffff;
+  color: #f3cba5;
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  display: inline-block;
 }
 
 a:hover {
-  background-color: #a0522d;
+  background-color: #975a5e;
+}
+
+.logoutBtn {
+  background-color: #975a5e;
+  color: #f3cba5;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+}
+
+.logoutBtn:hover {
+  background-color: #b87373;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 50px;
+  font-weight: bold;
+  color: #f3cba5;
+  font-family: "Bebas Neue", sans-serif;
 }

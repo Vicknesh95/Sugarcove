@@ -52,8 +52,13 @@ const Overlay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <div className={styles.delBtn}>
-          <button onClick={() => props.setShowUpdateModal(false)}>X</button>
+        <div>
+          <button
+            className={styles.delBtn}
+            onClick={() => props.setShowUpdateModal(false)}
+          >
+            X
+          </button>
         </div>
         <h1 className={styles.modalHeader}> Register </h1>
         <div>

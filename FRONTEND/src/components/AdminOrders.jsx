@@ -109,6 +109,7 @@ const AdminOrders = () => {
               <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
             </div>
             <button
+              className={styles.updateOrdersBtn}
               onClick={() => {
                 setShowUpdateModal(true);
                 setSelectedOrder(order);
@@ -147,6 +148,7 @@ const AdminOrders = () => {
               <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
             </div>
             <button
+              className={styles.updateOrdersBtn}
               onClick={() => {
                 setShowUpdateModal(true);
                 setSelectedOrder(order);
@@ -185,6 +187,7 @@ const AdminOrders = () => {
               <p>Total Amount: ${productTotal(order.products).toFixed(2)}</p>
             </div>
             <button
+              className={styles.updateOrdersBtn}
               onClick={() => {
                 setShowUpdateModal(true);
                 setSelectedOrder(order);

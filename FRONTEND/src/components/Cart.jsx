@@ -130,6 +130,7 @@ const Cart = () => {
                 />
                 {errors.notes && <p>{errors.notes}</p>}
                 <button
+                  className={styles.editItemBtn}
                   onClick={() => {
                     updateCartItems(item.product_id);
                   }}
@@ -168,6 +169,34 @@ const Cart = () => {
       </div>
       <div className={styles.payment}>
         <h2>Payment Instructions</h2>
+        <ol>
+          <li>Complete your order by clicking on the "Checkout" button.</li>
+          <li>
+            You will be prompted to input your delivery address and contact
+            information{" "}
+          </li>
+          <li>
+            Transfer the total amount to the following bank account:
+            <ul>
+              <li>Bank Name: POSB</li>
+              <li>Account Number: 123456789</li>
+              <li>Recipient Name: John Doe</li>
+            </ul>
+          </li>
+          <li>Check your Orders page within 12 hours for status updates.</li>
+          <li>
+            Your order status will change from "Pending Payment" to "In
+            Progress" once payment is confirmed.
+          </li>
+          <li>
+            After successful delivery, the order status will change to
+            "Completed."
+          </li>
+          <p className={styles.contact}>
+            Please feel free to contact us at 12345678 regarding any payment or
+            delivery related issues
+          </p>
+        </ol>
       </div>
       {showCheckoutModal && (
         <CheckoutCartModal

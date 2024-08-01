@@ -51,8 +51,13 @@ const Overlay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <div className={styles.delBtn}>
-          <button onClick={() => props.setShowCheckOutModal(false)}>X</button>
+        <div>
+          <button
+            className={styles.delBtn}
+            onClick={() => props.setShowCheckOutModal(false)}
+          >
+            X
+          </button>
         </div>
         <h1 className={styles.modalHeader}>
           Please fill in the following for delivery
@@ -68,7 +73,7 @@ const Overlay = (props) => {
             {errors.address && <p>{errors.address}</p>}
           </div>
           <div className={styles.modalInputContainer}>
-            <p> Contact Number </p>
+            <p> Contact Number: </p>
             <input
               type="tel"
               value={contact}

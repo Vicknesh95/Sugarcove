@@ -108,12 +108,14 @@ const Products = () => {
             <div className={styles.productCard} key={product.id}>
               <div className={styles.productName}>{product.product_name}</div>
               <div className={styles.productCategory}>
-                {product.product_type}
+                Type: {product.product_type}
               </div>
               <div className={styles.productDesc}>
                 {product.product_description}
               </div>
-              <div className={styles.productAllergens}>{product.allergens}</div>
+              <div className={styles.productAllergens}>
+                Allergens: {product.allergens}
+              </div>
               <div className={styles.price}>${product.product_price}</div>
               {userCtx.role === "USER" && (
                 <button

@@ -16,36 +16,40 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <ul>
-          <li>
-            <NavLink to="/">HOME</NavLink>
-          </li>
-          <li>
-            <NavLink to="/products">PRODUCTS</NavLink>
-          </li>
-          {accessToken && role === "USER" && (
+        <div className={styles.navItems}>
+          <ul>
             <li>
-              <NavLink to="/cart">CART</NavLink>
+              <NavLink to="/">HOME</NavLink>
             </li>
-          )}
-          {accessToken ? (
             <li>
-              {accessToken && role === "ADMIN" ? (
-                <NavLink to="/admin-orders">ORDERS</NavLink>
-              ) : (
-                <NavLink to="/orders">ORDERS</NavLink>
-              )}
+              <NavLink to="/products">PRODUCTS</NavLink>
             </li>
-          ) : null}
-
-          <li>
-            {accessToken ? (
-              <button onClick={handleLogout}>LOGOUT</button>
-            ) : (
-              <NavLink to="/login">LOGIN/REGISTER</NavLink>
+            {accessToken && role === "USER" && (
+              <li>
+                <NavLink to="/cart">CART</NavLink>
+              </li>
             )}
-          </li>
-        </ul>
+            {accessToken ? (
+              <li>
+                {accessToken && role === "ADMIN" ? (
+                  <NavLink to="/admin-orders">ORDERS</NavLink>
+                ) : (
+                  <NavLink to="/orders">ORDERS</NavLink>
+                )}
+              </li>
+            ) : null}
+          </ul>
+        </div>
+        <div className={styles.title}>Sugarcove</div>
+        <div className={styles.logoutContainer}>
+          {accessToken ? (
+            <button className={styles.logoutBtn} onClick={handleLogout}>
+              LOGOUT
+            </button>
+          ) : (
+            <NavLink to="/login">LOGIN/REGISTER</NavLink>
+          )}
+        </div>
       </nav>
     </>
   );

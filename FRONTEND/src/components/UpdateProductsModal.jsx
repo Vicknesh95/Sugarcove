@@ -61,8 +61,13 @@ const Overlay = (props) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <div className={styles.delBtn}>
-          <button onClick={() => props.setShowUpdateModal(false)}>X</button>
+        <div>
+          <button
+            className={styles.delBtn}
+            onClick={() => props.setShowUpdateModal(false)}
+          >
+            X
+          </button>
         </div>
         <h1 className={styles.modalHeader}> Edit Product Details </h1>
         <div>
@@ -112,7 +117,7 @@ const Overlay = (props) => {
             {errors.productDescription && <p>{errors.productDescription}</p>}
           </div>
         </div>
-        <button className={styles.addProductBtn} onClick={updateProduct}>
+        <button className={styles.editProductBtn} onClick={updateProduct}>
           Edit Product
         </button>
       </div>

@@ -3,6 +3,7 @@ import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
 import RegisterModal from "./RegisterModal";
 import { useNavigate } from "react-router-dom";
+import styles from "./css/Login.module.css";
 
 const Login = () => {
   const userCtx = useContext(UserContext);
@@ -58,8 +59,8 @@ const Login = () => {
       {showUpdateModal && (
         <RegisterModal setShowUpdateModal={setShowUpdateModal} />
       )}
-      <div className="login-container">
-        <div>
+      <div className={styles.loginContainer}>
+        <div className={styles.email}>
           <label>Email</label>
           <input
             type="text"
@@ -71,7 +72,7 @@ const Login = () => {
           {errors.email && <p>{errors.email}</p>}
         </div>
 
-        <div>
+        <div className={styles.password}>
           <label>Password</label>
           <input
             type="password"
@@ -82,8 +83,15 @@ const Login = () => {
           />
           {errors.password && <p>{errors.password}</p>}
         </div>
-        <button onClick={login}>Login</button>
-        <button onClick={() => setShowUpdateModal(true)}>Register</button>
+        <button className={styles.login} onClick={login}>
+          Login
+        </button>
+        <button
+          className={styles.register}
+          onClick={() => setShowUpdateModal(true)}
+        >
+          Register
+        </button>
       </div>
     </>
   );

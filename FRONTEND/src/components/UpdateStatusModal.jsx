@@ -40,7 +40,12 @@ const Overlay = (props) => {
     <div className={styles.backdrop}>
       <div className={styles.modal}>
         <div className={styles.delBtn}>
-          <button onClick={() => props.setShowUpdateModal(false)}>X</button>
+          <button
+            className={styles.delBtn}
+            onClick={() => props.setShowUpdateModal(false)}
+          >
+            X
+          </button>
         </div>
         <h1 className={styles.modalHeader}> Update Order Status </h1>
         <div className={styles.updateContainer}>
@@ -49,7 +54,9 @@ const Overlay = (props) => {
             <option value="IN PROGRESS">In Progress</option>
             <option value="COMPLETED">Completed</option>
           </select>
-          <button onClick={updateStatus}>Update Status</button>
+          <button className={styles.updateStatusBtn} onClick={updateStatus}>
+            Update Status
+          </button>
         </div>
       </div>
     </div>

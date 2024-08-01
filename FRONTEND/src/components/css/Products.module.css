@@ -8,42 +8,69 @@
 .productCard {
   position: relative;
   padding: 20px;
+  margin: 20px;
   border-radius: 5px;
-  border: solid 1px black;
+  background-color: #975a5e;
+  color: #f3bca5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  border: 2px solid #453953;
+  transition: transform 0.5s;
+  height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.productCard:hover {
+  transform: scale(1.05);
 }
 
 .productName {
   font-size: large;
-  font-weight: bolder;
+  font-weight: bold;
+  color: #f3cba5;
+  margin-bottom: 10px;
 }
 
 .productCategory {
   font-style: italic;
   font-weight: 200;
+  color: #f3cba5;
+  margin-bottom: 10px;
 }
 
 .productDesc {
-  padding-top: 10px;
+  color: #f3cba5;
+  max-height: 80px;
+  overflow-y: auto;
+  margin-bottom: 10px;
 }
 
 .productAllergens {
   padding-top: 5px;
-  color: red;
+  color: #f3cba5;
+  margin-bottom: 10px;
 }
 
 .price {
+  position: absolute;
   font-size: large;
   font-weight: bold;
-  margin-top: 10px;
+  color: #f3cba5;
+  margin-top: auto;
+  margin-bottom: 10px;
+  text-align: right;
+  top: 10px;
+  right: 20px;
 }
 
 .addToCartBtn,
 .addProductBtn,
 .deleteProductBtn,
 .updateProductBtn {
-  background-color: #8b4513;
-  color: white;
+  background-color: #453953;
+  color: #f3cba5;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -58,31 +85,18 @@
 }
 
 .addProductBtn {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  background-color: #8b4513;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+  margin: 20px;
 }
 
-.deleteProductBtn {
-  position: absolute;
-  top: 50px;
-  right: 10px;
-  background-color: #8b4513;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
+.deleteProductBtn,
 .updateProductBtn {
-  position: absolute;
-  top: 90px;
-  right: 10px;
-  background-color: #8b4513;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+  margin-right: 10px;
+}
+
+.addToCartBtn:hover,
+.addProductBtn:hover,
+.updateProductBtn:hover,
+.deleteProductBtn:hover {
+  background-color: #f3cba5;
+  color: #453953;
 }
